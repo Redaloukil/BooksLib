@@ -3,45 +3,42 @@ const _ = require('lodash')
 
 
 //IMPORT GRAPH QL OBJECT FORM GRAPHQL PACKAGE
-const {GraphQLObjectType , GraphQLString , GraphQLSchema , GraphQLID } = graphql;
+const {GraphQLObjectType , GraphQLString , GraphQLSchema , GraphQLID , GraphQLList } = graphql;
 
 
 const Books = [
     {
-        id : 1 , 
+        id : "1" , 
         name : "operating system",
-        author : "Reda Loukil"
+        authorID : "1"
     },
     {
-        id : 2 , 
+        id : "2" , 
         name : "Ditribuated system",
-        author : "Reda Loukil"
+        authorID : "3"
     },
     {
-        id : 3 , 
+        id : "3" , 
         name : "Netwoking",
-        author : "Reda Loukil"
+        authorID : "2"
     },
 
 ]
     
 const Authors = [
     {
-        id : 1 , 
+        id : "1", 
         name : "Reda ",
     },
     {
-        id : 2 , 
+        id : "2" , 
         name : "Mohamed",
     },
     {
-        id : 3 , 
+        id : "3" , 
         name : "Loukil",
         
-    },
-
-]
-
+    },]
 
 //SPECIFING A SCHEMA FOR GRAPHQL 
 const BookType = new GraphQLObjectType({
@@ -49,7 +46,12 @@ const BookType = new GraphQLObjectType({
     fields:() => ({
         id : {type : GraphQLID},
         name : {type : GraphQLString},
-        author : {type : GraphQLString}
+        Author : {
+            type: AuthorType,
+            resolve(parent , args){
+                return _.find(Authors , {id : parent.authorID})
+            }
+        }
     })
 })
 
@@ -58,8 +60,18 @@ const AuthorType = new GraphQLObjectType({
     fields:() => ({
         id : {type : GraphQLID},
         name : {type : GraphQLString},
+        Books : {
+            type : new GraphQLList(BookType),
+            resolve(parent , args){
+               return  _.filter(Books , {id:parent.id})
+            }
+        }
+    
     })
 })
+
+
+
 
 
 const RootQuery = new GraphQLObjectType({
@@ -74,10 +86,21 @@ const RootQuery = new GraphQLObjectType({
         },
         Author : {
             type : AuthorType, 
-            args : {id : {type : GraphQLString }}, 
+            args : {id : {type : GraphQLID }}, 
             resolve(parent , args){
-                 
-                return _.find( Authors , {id: args.id})
+                 return _.find( Authors , {id: args.id})
+            }
+        },
+        Books : {
+            type : new GraphQLList(BookType) , 
+            resolve(parent , args ) {
+                return Books
+            }
+        },
+        Authors : {
+            type : new GraphQLList(AuthorType) , 
+            resolve(parent , args ) {
+                return Authors
             }
         }
     }
