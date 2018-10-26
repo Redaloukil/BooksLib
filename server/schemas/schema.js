@@ -1,6 +1,8 @@
 const graphql = require('graphql');
-const _ = require('lodash')
+const _ = require('lodash');
 
+const Book = require('../models/Book');
+const Author = require('../models/Author');
 
 //IMPORT GRAPH QL OBJECT FORM GRAPHQL PACKAGE
 const {GraphQLObjectType , GraphQLString , GraphQLSchema , GraphQLID , GraphQLList } = graphql;
@@ -63,14 +65,44 @@ const AuthorType = new GraphQLObjectType({
         Books : {
             type : new GraphQLList(BookType),
             resolve(parent , args){
-               return  _.filter(Books , {id:parent.id})
+                return  _.filter(Books , {id:parent.id})
             }
         }
     
     })
 })
 
-
+const Mutations = new GraphQLObjectType({
+    name : 'Mutation',
+    fields : {
+        addAuthor : {
+            type : AuthorType , 
+            args : {
+                name : {type :GraphQLString} , 
+            },
+            resolve(parent , args){
+                let author = new Author({
+                    name : args.name,
+                })
+                return author.save();
+            }
+        },
+        addBook:{
+            type:BookType , 
+            args : {
+                name : { type : GraphQLString},
+                authorID : { type : GraphQLID},
+            },
+            resolve(parent , args ){
+                let book = new Book({
+                    name : args.name , 
+                    authorID : args.authorID,
+                })
+                return book.save()
+            }
+        }
+    }
+})
 
 
 
@@ -109,4 +141,5 @@ const RootQuery = new GraphQLObjectType({
 
 module.exports = new GraphQLSchema({
     query : RootQuery,
+    mutation : Mutations,
 });

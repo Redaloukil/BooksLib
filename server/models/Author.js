@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 
-const AuthorSchema = new schema({
+const AuthorSchema = new Schema({
     name : String,
 })
 
