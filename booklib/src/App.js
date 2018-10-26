@@ -1,25 +1,26 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import Library from './components /Library';
-import Loading from './components /Loading';
+
+import Library from './component/Library';
+import Loading from './component/Loading';
 
 class App extends Component {
   state = {
-    loading : false ,
+    loading : true ,
   }
 
   componentWillMount(){
     setTimeout(() => {
-      this.setState({loading : true})
+      this.setState({loading : false})
     } , 3000)
   }
 
   render() {
-    const {loading} = this.state.loading
+   
     return (
-      { loading ? <Loading/> : <Library/> }
-      
+      <div className="App">
+        {this.state.loading ? <Loading/>: <Library/> }
+      </div>
     );
   }
 }

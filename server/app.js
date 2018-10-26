@@ -3,10 +3,12 @@ const express = require('express');
 const schema = require('./schemas/schema');
 const graphqlHTTP = require('express-graphql');
 const mongoose = require('mongoose');
-
+const cors = require('cors')
 
 
 const app = express();
+
+app.use(cors())
 
 //Connect to remote mongoDB database 
 mongoose.connect("mongodb://redaloukil:redareda0@ds141813.mlab.com:41813/books_lib");
