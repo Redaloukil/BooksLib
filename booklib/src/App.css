@@ -1,3 +1,12 @@
+body {
+  
+}
+
+*{
+  padding: 0;
+  margin:0;
+  box-sizing: border-box;
+}
 .App {
   text-align: center;
 }
@@ -22,6 +31,8 @@
   color: #61dafb;
 }
 
+
+
 .books {
   width: 80%;
   margin:auto;
@@ -30,28 +41,60 @@
 }
 
 .third {
-  width: 28%;
+  width: 33%;
   float: left;
   padding:2%;
 }
 
 .book h1 {
   display:block;
-  font-size:40px;
+  font-size:30px;
+  background-color: #61dafb;
+  padding:2% 1%;
+  color: white;
 }
 
 .book p {
-  
-  font-size:25px;
+  background-color: #f4f4f4;
+  font-size:16px;
+  text-align:justify;
+  padding:3% 5%;
+}
+
+.author {
+  text-align:left;
+  padding:3% 1%;
 }
 
 .book {
   background-color: white;
   color: black;
-  padding:4%;
   cursor: pointer;
+  border-radius:4px;
+  opacity:0.8;
 }
 
+.book:hover{
+  opacity:1;
+  transition:0.2s;
+}
+
+.seach-input {
+  padding:8px 20px;
+  width:40%;
+  font-size:24px;
+}
+
+.button-input {
+  padding:8px 20px;
+  width:10%;
+  font-size:24px;
+  background-color: #61dafb;
+  border-color:#61dafb;
+  color: white;
+  font-weight:600;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
